@@ -6,7 +6,8 @@ import LoadingBar from 'react-top-loading-bar';
 
 export default class App extends Component {
   
-  apiKey = process.env.REACT_APP_NEWSMONK_API;
+  // apiKey = process.env.REACT_APP_NEWSMONK_API;
+  apiKey = process.env.REACT_APP_NEWSDATA_API;
   pageSize = 4;
   country = 'in' ;
 
@@ -26,7 +27,7 @@ export default class App extends Component {
           <LoadingBar height={3} color='#f11946' progress={this.state.progress}/>
           <Routes>
             {/* key attribute in component makes it unique, so the component will reload itself with updated props*/}
-            <Route exact path="/general" element={<News setProgress={this.setProgress} key="general" pageSize={this.pageSize} country={this.country} category='general' apiKey={this.apiKey}/>} />
+            <Route exact path="/world" element={<News setProgress={this.setProgress} key="world" pageSize={this.pageSize} country={this.country} category='world' apiKey={this.apiKey}/>} />
             <Route exact path="/business" element={<News setProgress={this.setProgress} key="business" pageSize={this.pageSize} country={this.country} category='business' apiKey={this.apiKey}/>} />
             <Route exact path="/entertainment" element={<News setProgress={this.setProgress} key="entertainment" pageSize={this.pageSize} country={this.country} category='entertainment' apiKey={this.apiKey}/>} />
             <Route exact path="/health" element={<News setProgress={this.setProgress} key="health" pageSize={this.pageSize} country={this.country} category='health' apiKey={this.apiKey}/>} />

@@ -8,7 +8,7 @@ export class News extends Component {
   static defaultProps = {
     country: "in",
     pageSize: 4,
-    category: "general",
+    category: "world",
   };
 
   static propTypes = {
@@ -25,7 +25,7 @@ export class News extends Component {
     //   this runs #1st
     super(props);
     this.state = {
-      articles: [],
+      results: [],
       loading: true,
       page: 1,
       totalResults: 0,
@@ -35,7 +35,8 @@ export class News extends Component {
 
   async updateNews() {
     this.props.setProgress(10);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsdata.io/api/1/news?country=${this.props.country}&category=${this.props.category}&apikey=${this.props.apiKey}&page=${this.state.page}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     this.props.setProgress(40);
@@ -43,8 +44,8 @@ export class News extends Component {
     console.log(parsedData);
     this.props.setProgress(80);
     this.setState({
-      // articles: parsedData.articles,
-      articles: this.state.articles.concat(parsedData.articles),
+      // results: parsedData.results,
+      results: this.state.results.concat(parsedData.results),
       totalResults: parsedData.totalResults,
       loading: false,
     });
@@ -70,13 +71,13 @@ export class News extends Component {
 
   fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 });
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsdata.io/api/1/news?country=${this.props.country}&category=${this.props.category}&apikey=${this.props.apiKey}&page=${this.state.page}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
     this.setState({
-      // articles: parsedData.articles,
-      articles: this.state.articles.concat(parsedData.articles),
+      // results: parsedData.results,
+      results: this.state.results.concat(parsedData.results),
       totalResults: parsedData.totalResults,
     });
   };
@@ -90,24 +91,24 @@ export class News extends Component {
         </h2>
         {this.state.loading && <Spinner />}
         <InfiniteScroll
-          dataLength={this.state.articles.length}
+          dataLength={this.state.results.length}
           next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
+          hasMore={this.state.results.length !== this.state.totalResults}
           loader={<Spinner />}
         >
           <div className="container">
             <div className="row">
               {/* {!this.state.loading && */}
-              {this.state.articles?.map((element) => {
+              {this.state.results?.map((element) => {
                 return (
-                  <div className="col-md-4 col-lg-3" key={element.url}>
+                  <div className="col-md-4 col-lg-3" key={element.link}>
                     <NewsItem
                       title={element.title}
                       description={element.description}
-                      imgUrl={element.urlToImage}
-                      newsUrl={element.url}
-                      source={element.source.name}
-                      date={element.publishedAt}
+                      imgUrl={element.image_url}
+                      newsUrl={element.link}
+                      source={element.source_id}
+                      date={element.pubDate}
                     />
                   </div>
                 );
@@ -117,7 +118,7 @@ export class News extends Component {
         </InfiniteScroll>
 
         <p className="text-muted text-center">
-          {this.state.articles.length === this.state.totalResults
+          {this.state.results.length === this.state.totalResults
             ? "End of Content"
             : ""}
         </p>
