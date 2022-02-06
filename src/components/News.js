@@ -27,7 +27,7 @@ export class News extends Component {
     this.state = {
       results: [],
       loading: true,
-      page: 1,
+      page: 0,
       totalResults: 0,
     };
     document.title = `NewsMonk | ${this.capitalizeFirstLetter(props.category)}`;
@@ -36,7 +36,7 @@ export class News extends Component {
   async updateNews() {
     this.props.setProgress(10);
     // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-    let url = `https://newsdata.io/api/1/news?country=${this.props.country}&category=${this.props.category}&apikey=${this.props.apiKey}&page=${this.state.page}`;
+    let url = `https://newsdata.io/api/1/news?apikey=${this.props.apiKey}&category=${this.props.category}${this.props.country === ''? '' : '&country='+this.props.country}&page=${this.state.page}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     this.props.setProgress(40);
@@ -71,7 +71,7 @@ export class News extends Component {
 
   fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 });
-    let url = `https://newsdata.io/api/1/news?country=${this.props.country}&category=${this.props.category}&apikey=${this.props.apiKey}&page=${this.state.page}`;
+    let url = `https://newsdata.io/api/1/news?&apikey=${this.props.apiKey}&category=${this.props.category}${this.props.country === ''? '' : '&country='+this.props.country}&page=${this.state.page}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
@@ -87,7 +87,7 @@ export class News extends Component {
     return (
       <>
         <h2 className="text-center text-secondary mb-2" style={{ marginTop: "90px" }}>
-          Top Headlines - {this.capitalizeFirstLetter(this.props.category)}
+          Headlines - {this.capitalizeFirstLetter(this.props.category)}
         </h2>
         {this.state.loading && <Spinner />}
         <InfiniteScroll
