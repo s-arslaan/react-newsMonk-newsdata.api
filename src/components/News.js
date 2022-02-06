@@ -57,18 +57,6 @@ export class News extends Component {
     this.updateNews();
   }
 
-  // handleNextClick = async () => {
-  //   // console.log("next");
-  //   this.setState({ page: this.state.page + 1 });
-  //   this.updateNews();
-  // };
-
-  // handlePrevClick = async () => {
-  //   // console.log("prev");
-  //   this.setState({ page: this.state.page - 1 });
-  //   this.updateNews();
-  // };
-
   fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 });
     let url = `https://newsdata.io/api/1/news?&apikey=${this.props.apiKey}&category=${this.props.category}${this.props.country === ''? '' : '&country='+this.props.country}&page=${this.state.page}`;
@@ -122,29 +110,6 @@ export class News extends Component {
             ? "End of Content"
             : ""}
         </p>
-
-        {/* Prev-Next buttons */}
-        {/* <div className="container d-flex justify-content-between">
-          <button
-            disabled={this.state.page <= 1}
-            type="button"
-            className="btn btn-dark m-1"
-            onClick={this.handlePrevClick}
-          >
-            &larr; Previous
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark m-1"
-            onClick={this.handleNextClick}
-            disabled={
-              this.state.page + 1 >
-              Math.ceil(this.state.totalResults / this.props.pageSize)
-            }
-          >
-            Next &rarr;
-          </button>
-        </div> */}
       </>
     );
   }

@@ -6,8 +6,8 @@ import LoadingBar from 'react-top-loading-bar';
 
 export default class App extends Component {
   
-  // apiKey = process.env.REACT_APP_NEWSMONK_API;
   apiKey = process.env.REACT_APP_NEWSDATA_API;
+  // apiKey = process.env.REACT_APP_GNEWSIO_API;
   pageSize = 4;
   country = 'in' ;
 
