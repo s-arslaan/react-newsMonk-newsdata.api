@@ -6,8 +6,9 @@ import LoadingBar from 'react-top-loading-bar';
 
 const App = () => {
 
-  const apiKey = process.env.REACT_APP_NEWSDATA_API;
+  // const apiKey = process.env.REACT_APP_NEWSDATA_API;
   // apiKey = process.env.REACT_APP_GNEWSIO_API;
+  const apiKey = 'pub_42712d46fb0769f538fc02a7c0f605141ff3';
   const pageSize = 4;
   const country = 'in';
   const [progress, setProgress] = useState(0);
