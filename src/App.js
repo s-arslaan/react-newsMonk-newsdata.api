@@ -10,14 +10,16 @@ const App = () => {
   // apiKey = process.env.REACT_APP_GNEWSIO_API;
   const apiKey = 'pub_42712d46fb0769f538fc02a7c0f605141ff3';
   const pageSize = 4;
-  const country = 'in';
+  // const country = 'in';
+  const [country, setCountry] = useState('')
   const [progress, setProgress] = useState(0);
 
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar country={country} setCountry={setCountry}/>
         <LoadingBar height={3} color='#f11946' progress={progress} />
+
         <Routes>
           {/* key attribute in component makes it unique, so the component will reload itself with updated props*/}
           <Route index element={<News setProgress={setProgress} key="world" pageSize={pageSize} country={''} category='world' apiKey={apiKey} />} />
@@ -33,6 +35,7 @@ const App = () => {
           <Route exact path="/sports" element={<News setProgress={setProgress} key="sports" pageSize={pageSize} country={country} category='sports' apiKey={apiKey} />} />
           <Route exact path="/technology" element={<News setProgress={setProgress} key="technology" pageSize={pageSize} country={country} category='technology' apiKey={apiKey} />} />
         </Routes>
+        
       </Router>
     </div>
   )

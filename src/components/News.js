@@ -15,12 +15,15 @@ const News = (props) => {
   };
 
   const updateNews = async () => {
+
     props.setProgress(10);
-    // let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${state.page}&pageSize=${props.pageSize}`;
+    
     const url = `https://newsdata.io/api/1/news?apikey=${props.apiKey}&category=${
       props.category
-    }${props.country === "" ? "" : "&country=" + props.country}&page=${page}`;
+    }${props.country === "" ? "" : "&country=" + props.country}&page=${page}&language=en`;
+
     setLoading(true);
+
     let data = await fetch(url);
     props.setProgress(40);
     let parsedData = await data.json();
@@ -34,16 +37,19 @@ const News = (props) => {
   };
 
   useEffect(() => {
-  document.title = `NewsMonk | ${capitalizeFirstLetter(props.category)}`;
+    document.title = `NewsMonk | ${capitalizeFirstLetter(props.category)}`;
     updateNews();
-  }, []);
+
+  }, [props.country]);
 
   const fetchMoreData = async () => {
+
     const url = `https://newsdata.io/api/1/news?&apikey=${
       props.apiKey
     }&category=${props.category}${
       props.country === "" ? "" : "&country=" + props.country
-    }&page=${page + 1}`;
+    }&page=${page + 1}&language=en`;
+
     setPage(page + 1);
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -58,7 +64,7 @@ const News = (props) => {
         className="text-center text-secondary mb-2"
         style={{ marginTop: "90px" }}
       >
-        Headlines - {capitalizeFirstLetter(props.category)}
+        Headlines { props.country === '' ? '' : '('+props.country + ') -'} {capitalizeFirstLetter(props.category)}
       </h2>
       {loading && <Spinner />}
       <InfiniteScroll
