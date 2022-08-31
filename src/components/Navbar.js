@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
@@ -35,7 +35,7 @@ const Navbar = (props) => {
             </ul>
             <div className="btn-group">
               <button type="button" className="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Country ({props.country})
+                Region - {props.country !== undefined ? props.country : 'World'}
               </button>
               <ul className="dropdown-menu dropdown-menu-start">
                 <li><button className="dropdown-item" type="button" onClick={() => {updateCountry('in')}}>IND</button></li>

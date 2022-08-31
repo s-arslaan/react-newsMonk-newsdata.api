@@ -76,7 +76,7 @@ const News = (props) => {
         <div className="container">
           <div className="row">
             {/* {!this.state.loading && */}
-            {results?.map((element) => {
+            {results.map((element) => {
               return (
                 <div className="col-md-4 col-lg-3" key={element.link}>
                   <NewsItem
